@@ -85,9 +85,6 @@ final class athreepr_swiper_preloader{
 		printf( '<div class="notice notice-warning is-dismissible"><p>' . esc_html__('%1$s', 'access-three-premium-resources') . '</p></div>', $message );
 	}
 }
-function sk_my_plugin() {
-	return \Elementor\Plugin::instance();
-}
 // Instantiate preloader.
 new athreepr_swiper_preloader();
 remove_action( 'shutdown', 'wp_ob_end_flush_all', 1 );
