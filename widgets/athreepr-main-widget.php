@@ -160,6 +160,20 @@ class AThreePR_Effective_widgets extends Widget_Base {
 			]
 		);
 		$this->add_control(
+			'athreepr_remember_value_switcher',
+			[
+				'label' => esc_html__( 'Value?', 'access-three-premium-resources' ),
+				'type' => Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'access-three-premium-resources' ),
+				'label_off' => esc_html__( 'No', 'access-three-premium-resources' ),
+				'condition' => [
+					'athreepr_remember_show_switcher' => 'yes',
+				],
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+		$this->add_control(
 			'athreepr_remember_me_text',
 			[
 				'label' => esc_html__( 'Remember Label', 'access-three-premium-resources' ),
@@ -215,6 +229,28 @@ class AThreePR_Effective_widgets extends Widget_Base {
 				'tab' => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'athreepr_separator_type' => 'registration',
+				],
+			]
+		);
+		$this->add_control(
+			'athreepr_firstname_text',
+			[
+				'label' => esc_html__( 'First Name', 'access-three-premium-resources' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'First Name', 'access-three-premium-resources' ),
+				'dynamic' => [
+					'active' => true,
+				],
+			]
+		);
+		$this->add_control(
+			'athreepr_lastname_text',
+			[
+				'label' => esc_html__( 'Last Name', 'access-three-premium-resources' ),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__( 'Last Name', 'access-three-premium-resources' ),
+				'dynamic' => [
+					'active' => true,
 				],
 			]
 		);
@@ -857,7 +893,7 @@ class AThreePR_Effective_widgets extends Widget_Base {
 				'id_submit' => 'wp-submit',
 				'remember' => $display['athreepr_remember_show_switcher'] == 'yes'?true:false,
 				'value_username' => '',
-				'value_remember' => false
+				'value_remember' => $display['athreepr_remember_value_switcher'] == 'yes'?true:false
 			);
 			if(!is_user_logged_in()){
 				echo wp_login_form($the_args);
@@ -876,10 +912,14 @@ class AThreePR_Effective_widgets extends Widget_Base {
 				'label_password_confirm' => $display['athreepr_confirm_password_text'],
 				'label_email' => $display['athreepr_login_email_text'],
 				'label_registration' => $display['athreepr_register_text'],
+				'label_first_name' => $display['athreepr_firstname_text'],
+				'label_last_name' => $display['athreepr_lastname_text'],
 				'id_username' => 'user_login',
 				'id_password' => 'user_pass',
 				'id_password_confirm' => 'user_pass_confirm',
 				'id_email' => 'user_email',
+				'id_first_name' => 'first_name',
+				'id_last_name' => 'last_name',
 				'id_submit' => 'wp-submit',
 				'value_username' => '',
 				'value_email' => ''
@@ -888,6 +928,10 @@ class AThreePR_Effective_widgets extends Widget_Base {
 				if ( !is_user_logged_in() ) {
 					echo '<form method="post" action="' . site_url('wp-login.php?action=register') . '">' .
 						wp_nonce_field( 'register_form', 'register_form_nonce' ) .
+						'<label for="' . $reg_args['id_first_name'] . '">' . $reg_args['label_first_name'] . '</label>' .
+						'<input type="text" name="' . $reg_args['id_first_name'] . '" id="' . $reg_args['id_first_name'] . '" required />' .
+						'<label for="' . $reg_args['id_last_name'] . '">' . $reg_args['label_last_name'] . '</label>' .
+						'<input type="text" name="' . $reg_args['id_last_name'] . '" id="' . $reg_args['id_last_name'] . '" required />' .
 						'<label for="' . $reg_args['id_username'] . '">' . $reg_args['label_username'] . '</label>' .
 						'<input type="text" name="' . $reg_args['id_username'] . '" id="' . $reg_args['id_username'] . '" value="' . $reg_args['value_username'] . '" required />' .
 						'<label for="' . $reg_args['id_email'] . '">' . $reg_args['label_email'] . '</label>' .
@@ -898,9 +942,9 @@ class AThreePR_Effective_widgets extends Widget_Base {
 						'<input type="password" name="' . $reg_args['id_password_confirm'] . '" id="' . $reg_args['id_password_confirm'] . '" required />' .
 						'<input type="submit" name="' . $reg_args['id_submit'] . '" id="' . $reg_args['id_submit'] . '" value="' . $reg_args['label_registration'] . '" />' .
 					'</form>';
-					} else {
-						echo '<div>' . esc_html__($display['athreepr_alRegNotice_text']) . '</div><a href="'.wp_login_url().'">'.$display['athreepr_reg_text'].'</a>';
-					}
+				} else {
+					echo '<div>' . esc_html__($display['athreepr_alRegNotice_text']) . '</div><a href="'.wp_login_url().'">'.$display['athreepr_reg_text'].'</a>';
+				}
 			echo '</div>';
 		} else if($display['athreepr_separator_type'] == 'subscribe'){
 			$subscribe_args = array(
