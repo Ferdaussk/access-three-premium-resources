@@ -931,7 +931,7 @@ class AThreePR_Effective_widgets extends Widget_Base {
 						'<label for="' . $reg_args['id_first_name'] . '">' . $reg_args['label_first_name'] . '</label>' .
 						'<input type="text" name="' . $reg_args['id_first_name'] . '" id="' . $reg_args['id_first_name'] . '" required />' .
 						'<label for="' . $reg_args['id_last_name'] . '">' . $reg_args['label_last_name'] . '</label>' .
-						'<input type="text" name="' . $reg_args['id_last_name'] . '" id="' . $reg_args['id_last_name'] . '" required />' .
+						'<input type="text" name="' . $reg_args['id_last_name'] . '" id="' . $reg_args['id_last_name'] . '" />' .
 						'<label for="' . $reg_args['id_username'] . '">' . $reg_args['label_username'] . '</label>' .
 						'<input type="text" name="' . $reg_args['id_username'] . '" id="' . $reg_args['id_username'] . '" value="' . $reg_args['value_username'] . '" required />' .
 						'<label for="' . $reg_args['id_email'] . '">' . $reg_args['label_email'] . '</label>' .
